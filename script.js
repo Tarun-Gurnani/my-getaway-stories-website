@@ -1,62 +1,65 @@
-// script.js
+// Replace with your actual YouTube API key and channel ID
+const API_KEY = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0'; // Your YouTube API key
+const CHANNEL_ID = 'UCuaCPsg-JwKIMHvPY3LgRKA'; // Your channel ID (replace with your channel ID)
 
-const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0'; // Your YouTube API Key
-const channelId = 'UCuaCPsg-JwKIMHvPY3LgRKA'; // My Getaway Stories Channel ID
-const maxResults = 10;  // Maximum number of videos to fetch
-
-const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet&type=video&order=date&maxResults=${maxResults}`;
-
+// Function to fetch videos from the YouTube API
 async function fetchVideos() {
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+        // Fetch recent videos
+        const videoResponse = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=10`);
+        const videoData = await videoResponse.json();
+        
+        // Fetch shorts (You can modify the search query to filter for shorts if needed)
+        const shortsResponse = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=10&type=video`);
+        const shortsData = await shortsResponse.json();
+
+        // Populate recent videos section
+        const videosContainer = document.getElementById('videos-container');
+        videoData.items.forEach(item => {
+            if (item.id.kind === "youtube#video") {
+                const videoElement = document.createElement('div');
+                videoElement.classList.add('video');
+                videoElement.innerHTML = `
+                    <a href="https://www.youtube.com/watch?v=${item.id.videoId}">
+                        <img src="${item.snippet.thumbnails.high.url}" alt="${item.snippet.title}">
+                        <h3>${item.snippet.title}</h3>
+                    </a>
+                `;
+                videosContainer.appendChild(videoElement);
+            }
+        });
+
+        // Populate shorts section
+        const shortsContainer = document.getElementById('shorts-container');
+        shortsData.items.forEach(item => {
+            if (item.id.kind === "youtube#video") {
+                const shortElement = document.createElement('div');
+                shortElement.classList.add('video');
+                shortElement.innerHTML = `
+                    <a href="https://www.youtube.com/watch?v=${item.id.videoId}">
+                        <img src="${item.snippet.thumbnails.high.url}" alt="${item.snippet.title}">
+                        <h3>${item.snippet.title}</h3>
+                    </a>
+                `;
+                shortsContainer.appendChild(shortElement);
+            }
+        });
+
+        // Fetch and display the featured video (latest video)
+        if (videoData.items.length > 0) {
+            const featuredVideo = videoData.items[0];
+            const featuredVideoContainer = document.getElementById('featured-video-container');
+            featuredVideoContainer.innerHTML = `
+                <a href="https://www.youtube.com/watch?v=${featuredVideo.id.videoId}">
+                    <img src="${featuredVideo.snippet.thumbnails.high.url}" alt="${featuredVideo.snippet.title}">
+                    <h3>${featuredVideo.snippet.title}</h3>
+                </a>
+            `;
+        }
+    } catch (error) {
+        console.error('Error fetching videos:', error);
     }
-    const data = await response.json();
-
-    const videosContainer = document.getElementById('videos-container');
-    const shortsContainer = document.getElementById('shorts-container');
-    const featuredVideoContainer = document.getElementById('featured-video-container');
-
-    // Clear existing content
-    videosContainer.innerHTML = '';
-    shortsContainer.innerHTML = '';
-    featuredVideoContainer.innerHTML = '';
-
-    // Process the API response and render videos
-    data.items.forEach((item, index) => {
-      const videoId = item.id.videoId;
-      const title = item.snippet.title;
-      const thumbnail = item.snippet.thumbnails.high.url;
-      const isShort = title.toLowerCase().includes('short');
-
-      const videoElement = `
-        <div class="video">
-          <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
-            <img src="${thumbnail}" alt="${title}">
-          </a>
-          <h3>${title}</h3>
-        </div>
-      `;
-
-      // Display the first video as the featured video
-      if (index === 0) {
-        featuredVideoContainer.innerHTML = `
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-        `;
-      }
-
-      // Display shorts separately
-      if (isShort) {
-        shortsContainer.innerHTML += videoElement;
-      } else {
-        videosContainer.innerHTML += videoElement;
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching YouTube videos:', error);  // Log errors in the console
-  }
 }
 
-// Fetch YouTube videos when the page loads
+// Call the function to fetch and display videos
 fetchVideos();

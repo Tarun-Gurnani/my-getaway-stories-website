@@ -10,57 +10,64 @@ body {
 header {
   background-color: #282c34; /* Dark header */
   color: #ffffff; /* White text */
-  padding: 10px 20px; /* Reduced padding for a shorter height */
+  padding: 5px 20px; /* Reduced padding for a shorter height */
   text-align: center;
   position: relative;
   z-index: 1000; /* Ensure header is above other content */
 }
 
+/* Navbar styling */
+.navbar {
+  position: fixed; /* Keep navbar fixed at the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  background-color: #111; /* Dark background */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  padding: 10px 20px; /* Padding for navbar */
+  z-index: 1000; /* Ensure it is above other content */
+  transition: background-color 0.3s; /* Smooth background color transition */
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space between logo/title and nav items */
+  align-items: center; /* Center items vertically */
+}
+
 .header-content {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .profile-img {
-  width: 50px;
+  width: 50px; /* Set logo size */
   height: 50px;
   border-radius: 50%;
-  margin-right: 15px;
+  margin-right: 10px; /* Space between logo and title */
 }
 
-.navbar {
-  position: fixed; /* Make navbar fixed at the top */
-  top: 0;
-  left: 0;
-  width: 100%; /* Ensure navbar takes full width */
-  background-color: #333; /* Dark gray for navbar */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-nav ul {
+.nav-icons {
+  display: flex; /* Flexbox for horizontal alignment */
   list-style-type: none;
-  padding: 0;
-  margin: 0;
 }
 
-nav ul li {
-  display: inline;
-  margin: 0 15px; /* Increased margin for better spacing */
+.nav-icons li {
+  margin: 0 15px; /* Margin for spacing */
 }
 
-nav ul li a {
-  color: #ff4757; /* Coral red */
+.nav-icons li a {
+  color: #fff; /* White text */
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s, transform 0.3s;
+  padding: 8px 12px; /* Padding around the links */
+  border-radius: 4px; /* Slightly rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
 }
 
-nav ul li a:hover {
-  color: #ff6b81; /* Lighter coral red on hover */
-  transform: translateY(-3px); /* Move up slightly on hover */
+.nav-icons li a:hover {
+  background-color: #ff4757; /* Coral red background on hover */
+  color: #fff; /* White text on hover */
 }
 
+/* Hero Section */
 #hero {
   background-image: url('https://source.unsplash.com/1600x400/?travel');
   background-size: cover;
@@ -132,4 +139,62 @@ footer {
   color: #ffffff; /* White text */
   text-align: center;
   padding: 15px;
+}
+
+/* About Us and Contact Us sections */
+section {
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #fff; /* White background */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnail-grid {
+  display: flex; /* Flexbox for thumbnail layout */
+  justify-content: space-around; /* Space around thumbnails */
+  flex-wrap: wrap; /* Allow wrapping */
+}
+
+.thumbnail-grid img {
+  width: 100px; /* Set thumbnail size */
+  height: auto;
+  margin: 10px; /* Margin around thumbnails */
+}
+
+.contact-list {
+  list-style-type: none; /* No bullets for contact list */
+  padding: 0;
+}
+
+.contact-list li {
+  margin: 10px 0; /* Margin for spacing */
+}
+
+.contact-list i {
+  margin-right: 8px; /* Space between icon and text */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .nav-icons {
+    flex-direction: column; /* Stack nav items on smaller screens */
+    align-items: center; /* Center nav items */
+  }
+
+  .nav-icons li {
+    margin: 10px 0; /* Spacing for stacked items */
+  }
+
+  #hero {
+    padding: 40px 20px; /* Adjust padding for smaller screens */
+  }
+
+  #hero h2 {
+    font-size: 2em; /* Smaller heading */
+  }
+
+  #hero p {
+    font-size: 1em; /* Smaller text */
+  }
 }
