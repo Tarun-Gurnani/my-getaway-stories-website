@@ -3,16 +3,17 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #eaeaea;
-  color: #333;
+  background-color: #f4f4f4; /* Light gray background */
+  color: #333; /* Dark text color */
 }
 
 header {
-  background-color: #4CAF50;
-  color: white;
-  padding: 20px;
+  background-color: #282c34; /* Dark header */
+  color: #ffffff; /* White text */
+  padding: 10px 20px; /* Reduced padding for a shorter height */
   text-align: center;
   position: relative;
+  z-index: 1000; /* Ensure header is above other content */
 }
 
 .header-content {
@@ -28,25 +29,35 @@ header {
   margin-right: 15px;
 }
 
+.navbar {
+  position: fixed; /* Make navbar fixed at the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ensure navbar takes full width */
+  background-color: #333; /* Dark gray for navbar */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 nav ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 nav ul li {
   display: inline;
-  margin: 0 15px;
+  margin: 0 15px; /* Increased margin for better spacing */
 }
 
 nav ul li a {
-  color: white;
+  color: #ff4757; /* Coral red */
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s, transform 0.3s;
 }
 
 nav ul li a:hover {
-  color: #ff5722; /* Change color on hover */
+  color: #ff6b81; /* Lighter coral red on hover */
   transform: translateY(-3px); /* Move up slightly on hover */
 }
 
@@ -56,6 +67,8 @@ nav ul li a:hover {
   color: white;
   text-align: center;
   padding: 60px 20px;
+  border-bottom: 2px solid #ff4757; /* Coral red border */
+  margin-top: 60px; /* Space for fixed navbar */
 }
 
 #hero h2 {
@@ -68,7 +81,7 @@ nav ul li a:hover {
 }
 
 .btn {
-  background-color: #ff5722;
+  background-color: #ff4757; /* Coral red button */
   color: white;
   padding: 10px 20px;
   text-decoration: none;
@@ -78,13 +91,13 @@ nav ul li a:hover {
 }
 
 .btn:hover {
-  background-color: #e64a19; /* Darken button on hover */
+  background-color: #ff6b81; /* Darken button on hover */
 }
 
 h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #4CAF50;
+  color: #ff4757; /* Coral red headings */
 }
 
 .video-grid {
@@ -95,7 +108,8 @@ h2 {
 }
 
 .video-grid .video {
-  background-color: white;
+  background-color: #fff; /* White background for videos */
+  border: 1px solid #ddd; /* Light gray border */
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 15px;
@@ -114,8 +128,8 @@ h2 {
 }
 
 footer {
-  background-color: #333;
-  color: white;
+  background-color: #282c34; /* Dark footer */
+  color: #ffffff; /* White text */
   text-align: center;
   padding: 15px;
 }
