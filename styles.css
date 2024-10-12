@@ -1,47 +1,38 @@
-/* styles.css */
+/* Reset some basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+/* Body styling with a professional background */
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('https://source.unsplash.com/1600x900/?travel'); /* Travel-themed background */
-  background-size: cover; /* Cover background */
-  background-attachment: fixed; /* Fixed background */
-  color: #333; /* Dark text color */
-}
-
-/* Main Section Adjustment */
-main {
-  margin-top: 70px; /* Add top margin to start after the fixed navbar */
-}
-
-header {
-  background-color: rgba(40, 44, 52, 0.9); /* Semi-transparent dark header */
-  color: #ffffff; /* White text */
-  padding: 5px 20px; /* Reduced padding for a shorter height */
-  text-align: center;
-  position: relative;
-  z-index: 1000; /* Ensure header is above other content */
-  padding-bottom: 10px;
+  background-image: url('https://source.unsplash.com/1600x900/?nature,landscape');
+  background-size: cover;
+  background-attachment: fixed;
+  color: #333;
 }
 
 /* Navbar styling */
 .navbar {
-  position: fixed; /* Keep navbar fixed at the top */
-  top: 0;
-  left: 0;
+  background-color: #282c34;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fix navbar to the top */
   width: 100%; /* Full width */
-  background-color: rgba(17, 17, 17, 0.8); /* Semi-transparent dark background */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  top: 0; /* Stick to the top */
   z-index: 1000; /* Ensure it is above other content */
-  padding: 10px 0; /* Ensure height is comfortable */
 }
 
 .navbar-content {
   display: flex;
-  justify-content: space-between; /* Space between logo and icons */
+  justify-content: space-between;
   align-items: center;
-  padding: 5px 20px; /* Padding for navbar */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .header-content {
@@ -50,136 +41,206 @@ header {
 }
 
 .profile-img {
-  width: 40px; /* Set logo size */
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin-right: 5px; /* Space between logo and title */
+  margin-right: 15px;
 }
 
-nav ul {
+h1 {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+/* Nav links styling */
+#nav-links {
+  display: flex;
   list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex; /* Flexbox for horizontal alignment */
-  transition: max-height 0.3s ease-in; /* Smooth transition for dropdown */
 }
 
-nav ul.collapsed {
-  max-height: 0; /* Hide dropdown */
-  overflow: hidden; /* Hide overflow */
+#nav-links li {
+  margin-left: 20px;
 }
 
-nav ul.expanded {
-  max-height: 200px; /* Set a max height for expansion */
+#nav-links li a {
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
-nav ul li {
-  margin: 0 10px; /* Margin for spacing */
+#nav-links li a:hover {
+  background-color: #61dafb;
 }
 
-nav ul li a {
-  color: #fff; /* White text */
-  text-decoration: none;
-  font-weight: bold;
-  padding: 5px 10px; /* Padding around the links */
-  border-radius: 4px; /* Slightly rounded corners */
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
-}
-
-nav ul li a:hover {
-  background-color: #ff4757; /* Coral red background on hover */
-  color: #fff; /* White text on hover */
-}
-
-/* Hamburger Menu Icon */
+/* Responsive hamburger menu */
 .menu-icon {
-  display: none; /* Hidden by default */
-  cursor: pointer; /* Cursor pointer for hover */
+  display: none;
 }
 
-/* Grid container for sections */
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  padding: 20px; /* Add padding to the grid */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  #nav-links {
+    display: none;
+  }
+
+  #nav-links.open {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
-/* Hero Section */
+/* Hero Section with Video Background */
 #hero {
+  position: relative;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
   text-align: center;
-  padding: 40px 20px;
-  border: 2px solid #ff4757;
-  margin-top: 60px;
-  background-color: rgba(0, 0, 0, 0.6); /* Add background to enhance text readability */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 0 20px rgba(255, 71, 87, 0.6); /* Glow effect */
+  overflow: hidden; /* Prevent overflow */
+  margin-top: 60px; /* Adjust margin to accommodate fixed navbar height */
+}
+
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  filter: brightness(0.6); /* Darken video background */
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
 }
 
 #hero h2 {
-  font-size: 2.5em; /* Increase font size for hero heading */
+  font-size: 3rem;
+  margin-bottom: 20px;
 }
 
 #hero p {
-  font-size: 1.1em; /* Increase font size for hero paragraph */
+  font-size: 1.2rem;
+  margin-bottom: 30px;
 }
 
-/* Section Styling */
+#hero .btn {
+  background-color: #ff6f61;
+  color: white;
+  padding: 15px 30px;
+  text-transform: uppercase;
+}
+
+#hero .btn:hover {
+  background-color: #ff3b2f;
+}
+
+/* Section styling */
 section {
-  background-color: rgba(255, 255, 255, 0.8); /* Light background for sections */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Padding inside sections */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.95);
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Thumbnail grid for About Us section */
-.thumbnail-grid {
-  display: flex;
-  flex-wrap: wrap; /* Wrap thumbnails to next line */
-  justify-content: space-around; /* Evenly distribute thumbnails */
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-/* Video grid */
+p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #61dafb;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #21a1f1;
+}
+
+/* Video grid styling */
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive columns */
-  gap: 10px; /* Space between videos */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
 }
 
-/* Footer */
+.video-item, .short-item {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+/* Footer styling */
 footer {
   text-align: center;
-  padding: 10px 0;
-  background-color: rgba(40, 44, 52, 0.8); /* Semi-transparent footer */
-  color: white;
+  padding: 20px 0;
+  background-color: #282c34;
+  color: #ffffff;
 }
 
-/* Responsive adjustments */
+.thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  justify-items: center;
+}
+
+.thumbnail-grid img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Responsive styling */
 @media (max-width: 768px) {
-  .navbar-content {
-    flex-direction: column; /* Stack items on smaller screens */
+  #hero h2 {
+    font-size: 2.5rem;
   }
 
-  nav ul {
-    flex-direction: column; /* Stack menu items */
-    display: none; /* Hide by default */
-    max-height: 0; /* Collapse the menu */
+  #hero p {
+    font-size: 1rem;
   }
 
-  nav ul.expanded {
-    display: flex; /* Show when expanded */
+  h1 {
+    font-size: 1.2rem;
   }
 
-  .menu-icon {
-    display: block; /* Show hamburger icon */
-  }
-
-  .grid-container {
-    grid-template-columns: 1fr; /* Single column layout */
-  }
-
-  #hero {
-    margin-top: 0; /* Remove margin for hero section on small screens */
+  h2 {
+    font-size: 1.5rem;
   }
 }

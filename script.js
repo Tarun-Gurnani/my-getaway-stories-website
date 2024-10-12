@@ -1,81 +1,150 @@
-// script.js
+const API_KEY = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0';
+const CHANNEL_ID = 'UCuaCPsg-JwKIMHvPY3LgRKA';
+const CACHE_DURATION = 3600000; // 1 hour in milliseconds
 
-// Function to fetch and display featured video
+// Function to check cache
+function getCachedData(key) {
+  const cached = localStorage.getItem(key);
+  if (!cached) return null;
+
+  const { data, timestamp } = JSON.parse(cached);
+  if (Date.now() - timestamp > CACHE_DURATION) {
+    localStorage.removeItem(key);
+    return null;
+  }
+  return data;
+}
+
+// Function to set cache
+function setCachedData(key, data) {
+  const cacheData = {
+    data,
+    timestamp: Date.now(),
+  };
+  localStorage.setItem(key, JSON.stringify(cacheData));
+}
+
+// Fetch YouTube data with caching
+async function fetchYouTubeVideos() {
+  const cachedVideos = getCachedData('youtube_videos');
+  if (cachedVideos) {
+    displayVideos(cachedVideos);
+    return;
+  }
+
+  try {
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=6`);
+    const data = await response.json();
+    const videos = data.items;
+    setCachedData('youtube_videos', videos);
+    displayVideos(videos);
+  } catch (error) {
+    console.error('Error fetching YouTube videos:', error);
+  }
+}
+
+// Fetch Featured Video
 async function fetchFeaturedVideo() {
-    const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0';
-    const channelId = 'UCuaCPsg-JwKIMHvPY3LgRKA';
-    
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&order=date&part=snippet,id&maxResults=1`);
+  const cachedFeatured = getCachedData('featured_video');
+  if (cachedFeatured) {
+    displayFeaturedVideo(cachedFeatured);
+    return;
+  }
+
+  try {
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=1`);
     const data = await response.json();
-    
-    const videoId = data.items[0].id.videoId;
-    const featuredVideoContainer = document.getElementById('featured-video-container');
-    featuredVideoContainer.innerHTML = `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+    const featuredVideo = data.items[0]; // Get the most recent video
+    setCachedData('featured_video', featuredVideo);
+    displayFeaturedVideo(featuredVideo);
+  } catch (error) {
+    console.error('Error fetching featured video:', error);
+  }
 }
 
-// Function to fetch and display recent videos
-async function fetchRecentVideos() {
-    const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0';
-    const channelId = 'UCuaCPsg-JwKIMHvPY3LgRKA';
-    
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&order=date&part=snippet,id&maxResults=6`);
+// Display featured video on the page
+function displayFeaturedVideo(video) {
+  const featuredVideoContainer = document.getElementById('featured-video-container');
+  const videoId = video.id.videoId;
+  const featuredVideoElement = `
+    <div class="featured-video-item">
+      <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+    </div>
+  `;
+  featuredVideoContainer.innerHTML = featuredVideoElement;
+}
+
+// Display videos on the page
+function displayVideos(videos) {
+  const videosContainer = document.getElementById('videos-container');
+  videosContainer.innerHTML = '';
+  videos.forEach(video => {
+    const videoId = video.id.videoId;
+    const videoElement = `
+      <div class="video-item">
+        <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+      </div>
+    `;
+    videosContainer.innerHTML += videoElement;
+  });
+}
+
+// Fetch YouTube Shorts with caching
+async function fetchYouTubeShorts() {
+  const cachedShorts = getCachedData('youtube_shorts');
+  if (cachedShorts) {
+    displayShorts(cachedShorts);
+    return;
+  }
+
+  try {
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=6&type=video&videoDuration=short`);
     const data = await response.json();
-    
-    const videosContainer = document.getElementById('videos-container');
-    data.items.forEach(item => {
-        const videoId = item.id.videoId;
-        videosContainer.innerHTML += `
-            <div class="video-item">
-                <iframe width="100%" height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                <p>${item.snippet.title}</p>
-            </div>
-        `;
+    const shorts = data.items;
+    setCachedData('youtube_shorts', shorts);
+    displayShorts(shorts);
+  } catch (error) {
+    console.error('Error fetching YouTube shorts:', error);
+  }
+}
+
+// Display shorts on the page
+function displayShorts(shorts) {
+  const shortsContainer = document.getElementById('shorts-container');
+  shortsContainer.innerHTML = '';
+  shorts.forEach(short => {
+    const videoId = short.id.videoId;
+    const shortElement = `
+      <div class="short-item">
+        <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+      </div>
+    `;
+    shortsContainer.innerHTML += shortElement;
+  });
+}
+
+// Load data on page load
+document.addEventListener('DOMContentLoaded', () => {
+  fetchYouTubeVideos();
+  fetchFeaturedVideo();
+  fetchYouTubeShorts();
+
+  // Smooth scrolling effect
+  const navLinks = document.querySelectorAll('#nav-links a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = e.target.getAttribute('href').substring(1);
+      const targetSection = document.getElementById(targetId);
+      targetSection.scrollIntoView({ behavior: 'smooth' });
     });
-}
+  });
 
-// Function to fetch and display shorts
-async function fetchShorts() {
-    const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0';
-    const channelId = 'UCuaCPsg-JwKIMHvPY3LgRKA';
-    
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&order=date&part=snippet,id&maxResults=6`);
-    const data = await response.json();
-    
-    const shortsContainer = document.getElementById('shorts-container');
-    data.items.forEach(item => {
-        const videoId = item.id.videoId;
-        shortsContainer.innerHTML += `
-            <div class="short-item">
-                <iframe width="100%" height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                <p>${item.snippet.title}</p>
-            </div>
-        `;
-    });
-}
+  // Toggle mobile menu
+  const menuIcon = document.getElementById('menu-icon');
+  const navLinksContainer = document.getElementById('nav-links');
 
-// Function to fetch and display thumbnails for About Us section
-async function fetchThumbnails() {
-    const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0';
-    const channelId = 'UCuaCPsg-JwKIMHvPY3LgRKA';
-    
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&order=date&part=snippet,id&maxResults=6`);
-    const data = await response.json();
-    
-    const thumbnailGrid = document.getElementById('thumbnail-grid');
-    data.items.forEach(item => {
-        const thumbnailUrl = item.snippet.thumbnails.default.url;
-        thumbnailGrid.innerHTML += `<img src="${thumbnailUrl}" alt="${item.snippet.title} Thumbnail" class="thumbnail">`;
-    });
-}
-
-// Add event listener for menu icon click
-document.getElementById('menu-icon').addEventListener('click', () => {
-    const navLinks = document.getElementById('nav-links');
-    navLinks.classList.toggle('expanded');
+  menuIcon.addEventListener('click', () => {
+    navLinksContainer.classList.toggle('active');
+  });
 });
-
-// Initialize the page
-fetchFeaturedVideo();
-fetchRecentVideos();
-fetchShorts();
-fetchThumbnails();
