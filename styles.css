@@ -1,6 +1,5 @@
 /* styles.css */
 
-/* General styles */
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -11,6 +10,7 @@ body {
   color: #333; /* Dark text color */
 }
 
+/* Main Section Adjustment */
 main {
   margin-top: 70px; /* Add top margin to start after the fixed navbar */
 }
@@ -22,8 +22,10 @@ header {
   text-align: center;
   position: relative;
   z-index: 1000; /* Ensure header is above other content */
+  padding-bottom: 10px;
 }
 
+/* Navbar styling */
 .navbar {
   position: fixed; /* Keep navbar fixed at the top */
   top: 0;
@@ -59,6 +61,16 @@ nav ul {
   padding: 0;
   margin: 0;
   display: flex; /* Flexbox for horizontal alignment */
+  transition: max-height 0.3s ease-in; /* Smooth transition for dropdown */
+}
+
+nav ul.collapsed {
+  max-height: 0; /* Hide dropdown */
+  overflow: hidden; /* Hide overflow */
+}
+
+nav ul.expanded {
+  max-height: 200px; /* Set a max height for expansion */
 }
 
 nav ul li {
@@ -79,14 +91,10 @@ nav ul li a:hover {
   color: #fff; /* White text on hover */
 }
 
-.social-icons {
-  display: flex;
-}
-
-.social-icons a {
-  color: white; /* Icon color */
-  margin-left: 15px; /* Space between icons */
-  font-size: 1.2em; /* Icon size */
+/* Hamburger Menu Icon */
+.menu-icon {
+  display: none; /* Hidden by default */
+  cursor: pointer; /* Cursor pointer for hover */
 }
 
 /* Grid container for sections */
@@ -94,8 +102,10 @@ nav ul li a:hover {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
+  padding: 20px; /* Add padding to the grid */
 }
 
+/* Hero Section */
 #hero {
   color: white;
   text-align: center;
@@ -103,183 +113,73 @@ nav ul li a:hover {
   border: 2px solid #ff4757;
   margin-top: 60px;
   background-color: rgba(0, 0, 0, 0.6); /* Add background to enhance text readability */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(255, 71, 87, 0.6); /* Glow effect */
 }
 
 #hero h2 {
-  font-size: 2em;
-  margin: 0;
+  font-size: 2.5em; /* Increase font size for hero heading */
 }
 
 #hero p {
-  font-size: 1em;
-  color: #f8f9fa; /* Light grey to ensure readability */
+  font-size: 1.1em; /* Increase font size for hero paragraph */
 }
 
-.btn {
-  background-color: #ff4757;
-  color: white;
-  padding: 8px 15px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s;
+/* Section Styling */
+section {
+  background-color: rgba(255, 255, 255, 0.8); /* Light background for sections */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Padding inside sections */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
-.btn:hover {
-  background-color: #ff6b81;
+/* Thumbnail grid for About Us section */
+.thumbnail-grid {
+  display: flex;
+  flex-wrap: wrap; /* Wrap thumbnails to next line */
+  justify-content: space-around; /* Evenly distribute thumbnails */
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 15px; /* Reduced margin */
-  color: #ff4757; /* Coral red headings */
-}
-
+/* Video grid */
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust grid */
-  gap: 10px; /* Reduced gap */
-  padding: 10px;
-}
-
-.video-grid .video {
-  background-color: white; /* White background */
-  border-radius: 5px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  overflow: hidden; /* Hide overflow */
-}
-
-.video-grid .video img {
-  width: 100%; /* Thumbnail width */
-  border-bottom: 2px solid #ff4757; /* Coral red border */
-}
-
-/* Thumbnail Grid */
-.thumbnail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Thumbnails grid */
-  gap: 10px; /* Space between thumbnails */
-}
-
-.thumbnail-grid img {
-  width: 100%; /* Thumbnail width */
-  border-radius: 5px; /* Rounded corners */
-}
-
-/* Contact Section */
-#contact ul {
-  list-style-type: none; /* Remove bullet points */
-  padding: 0; /* Remove padding */
-}
-
-#contact li {
-  margin: 10px 0; /* Margin for list items */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive columns */
+  gap: 10px; /* Space between videos */
 }
 
 /* Footer */
 footer {
-  background-color: rgba(0, 0, 0, 0.8); /* Dark footer */
-  color: white; /* White text */
   text-align: center;
-  padding: 10px 20px; /* Footer padding */
-  position: relative;
-  bottom: 0;
-  width: 100%; /* Full width footer */
+  padding: 10px 0;
+  background-color: rgba(40, 44, 52, 0.8); /* Semi-transparent footer */
+  color: white;
 }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 1024px) {
-  /* Reduce padding for large tablets and small laptops */
-  .navbar-content {
-    padding: 5px 15px;
-  }
-
-  .profile-img {
-    width: 35px;
-    height: 35px;
-  }
-
-  nav ul li {
-    margin: 0 8px;
-  }
-
-  nav ul li a {
-    padding: 5px 8px;
-  }
-}
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  /* Stack items for tablets and smaller screens */
   .navbar-content {
-    flex-direction: column; /* Stack content on small screens */
-    align-items: flex-start; /* Align items to the start */
-  }
-
-  .navbar ul {
-    flex-direction: column; /* Stack menu items */
-    margin-top: 10px; /* Space above menu */
-  }
-
-  .navbar ul li {
-    margin: 5px 0; /* Margin for menu items */
-  }
-
-  .video-grid, .thumbnail-grid {
-    grid-template-columns: 1fr; /* Single column for small screens */
-  }
-
-  #hero h2 {
-    font-size: 1.5em;
-  }
-
-  .btn {
-    padding: 10px 20px; /* Larger button for touch screens */
-  }
-}
-
-@media (max-width: 480px) {
-  /* Mobile specific styles */
-  .navbar-content {
-    padding: 5px 10px;
-  }
-
-  .profile-img {
-    width: 30px;
-    height: 30px;
+    flex-direction: column; /* Stack items on smaller screens */
   }
 
   nav ul {
-    flex-direction: column; /* Vertical navigation on mobile */
+    flex-direction: column; /* Stack menu items */
+    display: none; /* Hide by default */
+    max-height: 0; /* Collapse the menu */
   }
 
-  .navbar ul li {
-    margin: 5px 0; /* Margin for mobile menu items */
+  nav ul.expanded {
+    display: flex; /* Show when expanded */
   }
 
-  .navbar ul li a {
-    padding: 8px 15px; /* Larger tap area for mobile */
-    font-size: 0.9em;
+  .menu-icon {
+    display: block; /* Show hamburger icon */
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr; /* Single column layout */
   }
 
   #hero {
-    padding: 20px;
-    margin-top: 40px;
-  }
-
-  #hero h2 {
-    font-size: 1.2em;
-  }
-
-  .btn {
-    padding: 10px 20px;
-  }
-
-  .video-grid, .thumbnail-grid {
-    grid-template-columns: 1fr; /* Single column layout for videos */
-  }
-
-  footer {
-    font-size: 0.8em; /* Smaller footer text for mobile */
-    padding: 8px 10px;
+    margin-top: 0; /* Remove margin for hero section on small screens */
   }
 }
