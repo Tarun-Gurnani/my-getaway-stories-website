@@ -1,4 +1,4 @@
-// script.js
+// script.js testing
 
 const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0';  // Replace with your YouTube API Key
 const channelId = 'UCDsZzLTZudMCMnUpYqBzxHA'; // My Getaway Stories Channel ID
