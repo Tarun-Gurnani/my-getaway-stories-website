@@ -1,9 +1,9 @@
 /* styles.css */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: #eaeaea;
   color: #333;
 }
 
@@ -34,8 +34,30 @@ nav ul li a {
   font-weight: bold;
 }
 
-main {
-  padding: 20px;
+#hero {
+  background-image: url('https://source.unsplash.com/1600x400/?travel');
+  background-size: cover;
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+#hero h2 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+#hero p {
+  font-size: 1.2em;
+}
+
+.btn {
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 h2 {
@@ -57,6 +79,11 @@ h2 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 15px;
   text-align: center;
+  transition: transform 0.3s;
+}
+
+.video-grid .video:hover {
+  transform: scale(1.05);
 }
 
 .video-grid .video img {
@@ -70,7 +97,4 @@ footer {
   color: white;
   text-align: center;
   padding: 15px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
 }

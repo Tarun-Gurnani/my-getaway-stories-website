@@ -1,6 +1,6 @@
 // script.js
 
-const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0'; // Replace with your YouTube API Key
+const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0'; // Your YouTube API Key
 const channelId = 'UCuaCPsg-JwKIMHvPY3LgRKA'; // My Getaway Stories Channel ID
 const maxResults = 10;  // Maximum number of videos to fetch
 
