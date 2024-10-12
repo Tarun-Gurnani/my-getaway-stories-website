@@ -1,7 +1,7 @@
 // script.js testing
 
 const apiKey = 'AIzaSyBMCVvRn7swTSxbRzCbffbe45SCFE605f0';  // Replace with your YouTube API Key
-const channelId = 'UCDsZzLTZudMCMnUpYqBzxHA'; // My Getaway Stories Channel ID
+const channelId = 'UCuaCPsg-JwKIMHvPY3LgRKA'; // My Getaway Stories Channel ID
 const maxResults = 10;  // Maximum number of videos to fetch
 
 const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet&type=video&order=date&maxResults=${maxResults}`;
